@@ -1,0 +1,9 @@
+.separator |
+.import item_table.dat Item
+UPDATE Item SET Buy_Price = null WHERE Buy_Price = 'NULL';
+UPDATE Item SET Description = null WHERE Description = 'NULL';
+.import user_table.dat AuctionUser
+UPDATE AuctionUser SET Country = null WHERE Country = 'NULL';
+UPDATE AuctionUser SET Location = null WHERE Location = 'NULL';
+.import bids_table.dat Bids
+.import category_table.dat Category

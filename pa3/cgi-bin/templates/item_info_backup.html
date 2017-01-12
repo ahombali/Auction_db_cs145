@@ -1,0 +1,48 @@
+{% extends "app_base.html" %}
+{% block content %}
+<h3> Auction Info - Item </h3> 
+
+<form method="POST" action="auction_info" role="form" style="max-width:400px; width:100%">
+	{% if message is defined %}
+	<div class="alert alert-warning" role="alert">{{ message }}</div>
+	{% endif %}
+	<div class="alert alert-info">Enter Item ID whose auction information you want to retrieve</div>
+	<div class="form-group">
+	  <label for="itemID">Item ID</label>
+	  <input type="text" class="form-control" id="itemID" name="itemID" />
+	</div>
+	
+	<div><input type="submit" value="Get Info!" class="btn btn-primary" /></div>
+</form>
+<h3>Result</h3>
+<ul>
+{% if status %}
+<p>Status: {{ status }}</p>
+{% endif %}
+
+
+<h4>Bids</h4>
+<ul>
+{% if bids %}
+{% for result in bids %}
+	{% for key in result %}
+		<div>
+			<span>{{ key|e }}</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span>{{ result[key]|e }}</span>
+		</div>
+  	{% endfor %}
+  	<div>--------</div>
+{% endfor %}
+{% else %}
+<div>No Bids</div>
+{% endif %}
+</ul>
+
+{% if winner %}
+<p>Winner: {{ winner }}</p>
+{% endif %}
+
+</ul>
+
+{% endblock %}

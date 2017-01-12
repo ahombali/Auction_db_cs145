@@ -1,0 +1,63 @@
+1. No two users can share the same User ID.
+In the table AuctionUser make UserID a primary key. 
+This primary key constraint is added in create.sql
+
+2. All sellers and bidders must already exist as users.
+In the table Item, SellerID is a foreign key referencing UserID from AuctionUser. Similarly, BidderID is a foreign key in the Bids table which references UserID from AuctionUser.
+These foreign key constraints are added in create.sql
+
+3. No two items can share the same Item ID.
+In the table Item make ItemID a primary key.
+This primary key constraint is added in create.sql
+
+4. Every bid must correspond to an actual item.
+In the table Bids, make ItemID a foreign key that references ItemID from Item table.
+This foreign key constraint is added in create.sql
+
+5. The items for a given category must all exist.
+In the table Category, make ItemID a foreign key that references ItemID from Item table.
+This foreign key constraint is added in create.sql
+
+6. An item cannot belong to a particular category more than once.
+In the table Category, have a Unique constraint on ItemID and Category together.
+This constraint is added in create.sql
+
+7. The end time for an auction must always be after its start time.
+Have a check constraint in Item table such that Ends is greater than Started.
+This check constraint is added in create.sql
+
+8. The Current Price of an item must always match the Amount of the most recent bid for that item.
+Added a trigger to update the column 'Currently' in Items Table belonging to the same ItemID, whenever a new bid is made for that particular ItemID.
+This trigger is added as 'trigger1_add.sql' and 'trigger1_drop.sql'.
+
+9. A user may not bid on an item he or she is also selling.
+Added a trigger to block insertion of new bids whenever the BidderID is same as SellerID for a particular ItemID.
+This trigger is added as 'trigger2_add.sql' and 'trigger2_drop.sql'.
+
+10. No auction may have two bids at the exact same time.
+In the table Bids, have a Unique constraint together on ItemID and Time.
+This constraint is added in create.sql
+
+11. No auction may have a bid before its start time or after its end time.
+Added a trigger to block insertion of new bids whose bidding Time is outside the range of Start Time or End Time for that particular ItemID.
+This trigger is added as 'trigger3_add.sql' and 'trigger3_drop.sql'.
+
+12. No user can make a bid of the same amount to the same item more than once.
+In the table Bids, have a Unique constraint together on ItemID, BidderID and Amount.
+This constraint is added in create.sql
+
+13. In every auction, the Number of Bids attribute corresponds to the actual number of bids for that particular item.
+Added a trigger to update 'Number_of_Bids' in Items Table when new a new bid is inserted for that particular ItemID
+This trigger is added as 'trigger4_add.sql' and 'trigger4_drop.sql'.
+
+14. Any new bid for a particular item must have a higher amount than any of the previous bids for that particular item.
+Added a trigger to block insertion of new bids when Bid Amount is not higher than any of the existing bid amounts for that ItemID.
+This trigger is added as 'trigger5_add.sql' and 'trigger5_drop.sql'.
+
+15. All new bids must be placed at the time which matches the current time of your AuctionBase system.
+Added a trigger to block insertion of new bids when Bidding Time is not equal to the System Time in CurrentTime Table.
+This trigger is added as 'trigger6_add.sql' and 'trigger6_drop.sql'.
+
+16. The current time of your AuctionBase system can only advance forward in time, not backward in time.
+Added a trigger to block updates on CurrentTime table if  new time is less than old/existing system time.
+This trigger is added as 'trigger7_add.sql' and 'trigger7_drop.sql'.

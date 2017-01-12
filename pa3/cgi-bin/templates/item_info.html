@@ -1,0 +1,43 @@
+{% extends "app_base.html" %}
+{% block content %}
+
+{% if item_id is defined %}
+<h3> Auction Info - Item {{ item_id }}</h3> 
+{% endif %}
+
+{% if message is defined %}
+<div class="alert alert-warning" role="alert">{{ message }}</div>
+{% endif %}
+
+<h3>Result</h3>
+<ul>
+{% if status %}
+<p>Status: {{ status }}</p>
+{% endif %}
+
+
+<h4>Bids</h4>
+<ul>
+{% if bids %}
+{% for result in bids %}
+	{% for key in result %}
+		<div>
+			<span>{{ key|e }}</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span>{{ result[key]|e }}</span>
+		</div>
+  	{% endfor %}
+  	<div>--------</div>
+{% endfor %}
+{% else %}
+<div>No Bids</div>
+{% endif %}
+</ul>
+
+{% if winner %}
+<p>Winner: {{ winner }}</p>
+{% endif %}
+
+</ul>
+
+{% endblock %}
